@@ -58,3 +58,16 @@ class PrivateBookmarkDetailsApiTests(TestCase):
 
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data[0]['name'], detail.name)
+
+    def test_create_bookmark_detail(self):
+
+        payload = {'name': 'Coco'}
+
+        self.client.post(BOOKMARK_DETAILS_URL, payload)
+
+        exists = BookmarkDetail.objects.filter(
+            user=self.user,
+            name=payload['name']
+        ).exists()
+
+        self.assertTrue(exists)

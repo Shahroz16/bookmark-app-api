@@ -6,41 +6,33 @@ from core.models import Tag, BookmarkDetail
 from .serializers import TagSerializer, BookmarkDetailSerializer
 
 
-class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
-                 mixins.CreateModelMixin):
+class BaseBookmarkAttrViewSets(viewsets.GenericViewSet, mixins.ListModelMixin,
+                               mixins.CreateModelMixin):
     """
-    Manage tags in the db
+    Base viewset for user ownerd bookmark
     """
 
-    authentical_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
 
     def get_queryset(self):
-        """
-        Return object for current authenticated user only
-        """
-
         return self.queryset.filter(user=self.request.user).order_by('-name')
-
+    
     def perform_create(self, serializer):
-        """
-        Create a new tag
-        """
-
         serializer.save(user=self.request.user)
 
 
-class BookmarkDetailViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class TagViewSet(BaseBookmarkAttrViewSets):
+    """
+    Manage tags in the db
+    """
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class BookmarkDetailViewSet(BaseBookmarkAttrViewSets):
     """
     Manage bookmark details in the db
     """
-
-    authentical_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
     queryset = BookmarkDetail.objects.all()
     serializer_class = BookmarkDetailSerializer
-
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user).order_by('-name')

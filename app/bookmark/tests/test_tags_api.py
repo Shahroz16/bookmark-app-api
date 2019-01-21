@@ -26,7 +26,7 @@ class PublicTagsAPITests(TestCase):
 
         res = self.client.get(TAG_URL)
 
-        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateTagsAPITests(TestCase):
