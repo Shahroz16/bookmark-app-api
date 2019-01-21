@@ -5,6 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('tags', views.TagViewSet)
+router.register('bookmark-detail', views.BookmarkDetailViewSet)
 
 app_name = 'bookmark'
 

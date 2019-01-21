@@ -2,8 +2,8 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Tag
-from .serializers import TagSerializer
+from core.models import Tag, BookmarkDetail
+from .serializers import TagSerializer, BookmarkDetailSerializer
 
 
 class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
@@ -28,5 +28,19 @@ class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
         """
         Create a new tag
         """
-        
+
         serializer.save(user=self.request.user)
+
+
+class BookmarkDetailViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    """
+    Manage bookmark details in the db
+    """
+
+    authentical_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = BookmarkDetail.objects.all()
+    serializer_class = BookmarkDetailSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('-name')

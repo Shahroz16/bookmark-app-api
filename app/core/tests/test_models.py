@@ -72,3 +72,15 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(tag), tag.name)
+
+    def test_bookmark_detail_str(self):
+        """
+        Test the ingredient string representation
+        """
+
+        detail = models.BookmarkDetail.objects.create(
+            user=sample_user(),
+            name='Food'
+        )
+
+        self.assertEqual(str(detail), detail.name)
