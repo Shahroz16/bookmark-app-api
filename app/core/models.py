@@ -67,7 +67,7 @@ class Tag(models.Model):
 
 class BookmarkDetail(models.Model):
     """
-    Bookmark details for a bookmark
+    Model for bookmark details
     """
 
     name = models.CharField(max_length=255)
@@ -78,3 +78,24 @@ class BookmarkDetail(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Bookmark(models.Model):
+    """
+    Model for bookmark
+    """
+
+    title = models.CharField(max_length=255)
+    url = models.URLField
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    tags = models.ManyToManyField('Tag')
+    detail = models.ForeignKey(
+        BookmarkDetail,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.url

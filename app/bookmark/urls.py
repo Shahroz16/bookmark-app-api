@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views
+from .views import TagViewSet, BookmarkDetailViewSet
 
 
 router = DefaultRouter()
-router.register('tags', views.TagViewSet)
-router.register('bookmark-detail', views.BookmarkDetailViewSet)
+router.register('tag', TagViewSet)
+router.register('detail', BookmarkDetailViewSet)
 
 app_name = 'bookmark'
 

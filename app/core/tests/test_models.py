@@ -84,3 +84,16 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(detail), detail.name)
+
+    def test_bookmark(self):
+        """
+        Test the bookmark model
+        """
+
+        bookmark = models.Bookmark.objects.create(
+            user=sample_user(),
+            title='Android',
+            url='www.android.come'
+        )
+
+        self.assertEqual(str(bookmark), bookmark.url)

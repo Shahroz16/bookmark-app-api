@@ -5,10 +5,10 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from .core.models import BookmarkDetail
+from core.models import BookmarkDetail
 from bookmark.serializers import BookmarkDetailSerializer
 
-BOOKMARK_DETAILS_URL = reverse('bookmakr:bookmark-detail-list')
+BOOKMARK_DETAILS_URL = reverse('bookmark:detail')
 
 
 class PublicBookmarkDetailsApiTests(TestCase):
